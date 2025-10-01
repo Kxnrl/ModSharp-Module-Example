@@ -11,29 +11,29 @@ namespace Kxnrl.Sparkle;
 
 internal sealed class InterfaceBridge
 {
-    public string               SharpPath         { get; }
-    public string               RootPath          { get; }
-    public string               DllPath           { get; }
-    public string               DataPath          { get; }
-    public string               ConfigPath        { get; }
-    public Version              GameVersion       { get; }
-    public Version              Version           { get; }
-    public FileVersionInfo      FileVersion       { get; }
-    public DateTime             FileTime          { get; }
-    public IEventManager        EventManager      { get; }
-    public IEntityManager       EntityManager     { get; }
-    public IClientManager       ClientManager     { get; }
-    public IConVarManager       ConVarManager     { get; }
-    public ITransmitManager     TransmitManager   { get; }
-    public IHookManager         HookManager       { get; }
-    public IFileManager         FileManager       { get; }
-    public ISchemaManager       SchemaManager     { get; }
-    public IEconItemManager     EconItemManager   { get; }
-    public ISoundManager        SoundManager      { get; }
-    public IModSharp            ModSharp          { get; }
-    public IPhysicsQueryManager PhysicsQuery      { get; }
-    public IGameData            GameData          { get; }
-    public ILoggerFactory       LoggerFactory     { get; }
+    public string               SharpPath       { get; }
+    public string               RootPath        { get; }
+    public string               DllPath         { get; }
+    public string               DataPath        { get; }
+    public string               ConfigPath      { get; }
+    public Version              GameVersion     { get; }
+    public Version              Version         { get; }
+    public FileVersionInfo      FileVersion     { get; }
+    public DateTime             FileTime        { get; }
+    public IEventManager        EventManager    { get; }
+    public IEntityManager       EntityManager   { get; }
+    public IClientManager       ClientManager   { get; }
+    public IConVarManager       ConVarManager   { get; }
+    public ITransmitManager     TransmitManager { get; }
+    public IHookManager         HookManager     { get; }
+    public IFileManager         FileManager     { get; }
+    public ISchemaManager       SchemaManager   { get; }
+    public IEconItemManager     EconItemManager { get; }
+    public ISoundManager        SoundManager    { get; }
+    public IModSharp            ModSharp        { get; }
+    public IPhysicsQueryManager PhysicsQuery    { get; }
+    public IGameData            GameData        { get; }
+    public ILoggerFactory       LoggerFactory   { get; }
 
     private readonly ILogger<InterfaceBridge> _logger;
 

@@ -1,0 +1,8 @@
+{
+  "Addresses": {
+    "CBaseFilter::InputTestActivator": {
+      "library": "server",
+      "windows": "48 89 5C 24 08 57 48 83 EC ? 4C 8B 02"
+    }
+  }
+}
