@@ -32,7 +32,7 @@ public sealed class Sparkle : IModSharpModule
         ArgumentNullException.ThrowIfNull(version);
         ArgumentNullException.ThrowIfNull(coreConfiguration);
 
-        var bridge = new InterfaceBridge(dllPath, sharpPath, version, sharedSystem);
+        var bridge = new InterfaceBridge(dllPath, sharpPath, version, this, sharedSystem);
 
         var configuration = new ConfigurationBuilder()
                             .AddJsonFile(Path.Combine(dllPath, "appsettings.json"), false, false)
@@ -48,7 +48,7 @@ public sealed class Sparkle : IModSharpModule
 
         ConfigureServices(services);
 
-        _bridge          = new InterfaceBridge(dllPath, sharpPath, version, sharedSystem);
+        _bridge          = bridge;
         _logger          = sharedSystem.GetLoggerFactory().CreateLogger<Sparkle>();
         _serviceProvider = services.BuildServiceProvider();
     }
@@ -60,27 +60,29 @@ public sealed class Sparkle : IModSharpModule
 
         var init = 0;
 
-        foreach (var service in _serviceProvider.GetServices<IManager>())
+        var managers = CallInit<IManager>();
+
+        if (managers > 0)
         {
-            if (!service.Init())
-            {
-                _logger.LogError("Failed to init manager {service}!", service.GetType().FullName);
-
-                return false;
-            }
-
-            init++;
+            init += managers;
         }
 
-        if (init == 0)
+        var modules = CallInit<IModule>();
+
+        if (modules > 0)
         {
-            throw new ApplicationException("No Modules");
+            init += modules;
         }
+
+        return init == 0 ? throw new ApplicationException("No Modules") : true;
+    }
+
+    public void PostInit()
+    {
+        _logger.LogInformation("Why don't you stay and play for a while?");
 
         CallPostInit<IManager>();
         CallPostInit<IModule>();
-
-        return true;
     }
 
     public void Shutdown()
@@ -94,14 +96,12 @@ public sealed class Sparkle : IModSharpModule
         _bridge.GameData.Unregister("Sparkle.games");
     }
 
-    public void PostInit()
-    {
-        _logger.LogInformation("Why don't you stay and play for a while?");
-    }
-
     public void OnAllModulesLoaded()
     {
         _logger.LogInformation("A foolish sage or a wise fool... Who will I become next?");
+
+        CallOnAllSharpModulesLoaded<IManager>();
+        CallOnAllSharpModulesLoaded<IModule>();
     }
 
     public void OnLibraryConnected(string name)
@@ -119,6 +119,25 @@ public sealed class Sparkle : IModSharpModule
         services
             .AddManagers() // Managers
             .AddModules(); // Modules;
+    }
+
+    private int CallInit<T>() where T : IBaseInterface
+    {
+        var init = 0;
+
+        foreach (var service in _serviceProvider.GetServices<T>())
+        {
+            if (!service.Init())
+            {
+                _logger.LogError("Failed to Init {service}!", service.GetType().FullName);
+
+                return -1;
+            }
+
+            init++;
+        }
+
+        return init;
     }
 
     private void CallPostInit<T>() where T : IBaseInterface
@@ -147,6 +166,21 @@ public sealed class Sparkle : IModSharpModule
             catch (Exception e)
             {
                 _logger.LogError(e, "An error occurred while calling Shutdown in {m}", service.GetType().Name);
+            }
+        }
+    }
+
+    private void CallOnAllSharpModulesLoaded<T>() where T : IBaseInterface
+    {
+        foreach (var service in _serviceProvider.GetServices<T>())
+        {
+            try
+            {
+                service.OnAllSharpModulesLoaded();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while calling OnAllSharpModulesLoaded in {m}", service.GetType().Name);
             }
         }
     }

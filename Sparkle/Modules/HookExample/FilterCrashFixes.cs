@@ -1,6 +1,5 @@
 using System.Runtime.InteropServices;
 using Kxnrl.Sparkle.Interfaces;
-using Kxnrl.Sparkle.Managers;
 using Kxnrl.Sparkle.Managers.Hook;
 using Microsoft.Extensions.Logging;
 

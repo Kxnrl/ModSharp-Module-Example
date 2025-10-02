@@ -1,4 +1,4 @@
-using Sharp.Shared.Objects;
+﻿using Sharp.Shared.Objects;
 using Sharp.Shared.Types;
 
 namespace Kxnrl.Sparkle.Managers.Event;

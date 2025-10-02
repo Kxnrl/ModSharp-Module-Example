@@ -1,4 +1,4 @@
-using Kxnrl.Sparkle.Interfaces;
+﻿using Kxnrl.Sparkle.Interfaces;
 using Kxnrl.Sparkle.Managers.Event;
 using Microsoft.Extensions.Logging;
 using Sharp.Shared.GameEvents;

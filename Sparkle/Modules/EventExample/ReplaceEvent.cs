@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Kxnrl.Sparkle.Interfaces;
 using Kxnrl.Sparkle.Managers.Event;
 using Microsoft.Extensions.Logging;

@@ -5,8 +5,8 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <LangVersion>13</LangVersion>
         <Nullable>enable</Nullable>
-        <AssemblyName>Sparkle</AssemblyName>
-        <RootNamespace>Kxnrl.Sparkle</RootNamespace>
+        <AssemblyName>Sparkle.Kendama</AssemblyName>
+        <RootNamespace>Kxnrl.Sparkle.Kendama</RootNamespace>
         <Version>1.0</Version>
         <Copyright>©2025 Kxnrl</Copyright>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -46,17 +46,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="appsettings.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="ModSharp.Sharp.Shared" Version="2.0.4" PrivateAssets="all" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Kendama\Kendama.csproj" Private="false" ExcludeAssets="runtime" />
+        <PackageReference Include="ModSharp.Sharp.Shared" Version="2.0.4"  PrivateAssets="all" />
     </ItemGroup>
 
 </Project>

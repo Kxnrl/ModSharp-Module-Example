@@ -13,7 +13,7 @@ internal sealed class BlockEvent : IModule
 
     public BlockEvent(ILogger<BlockEvent> logger, IEventManager eventManager)
     {
-        _logger       = logger;
+        _logger = logger;
 
         eventManager.HookEvent("player_changename", OnPlayerChangeName);
         eventManager.HookEvent("weapon_reload",     OnWeaponReload);

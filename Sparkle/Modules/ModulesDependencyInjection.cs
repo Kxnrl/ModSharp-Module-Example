@@ -1,6 +1,7 @@
 using Kxnrl.Sparkle.Interfaces;
 using Kxnrl.Sparkle.Modules.EventExample;
 using Kxnrl.Sparkle.Modules.HookExample;
+using Kxnrl.Sparkle.Modules.SharedInterfaceExample;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kxnrl.Sparkle.Modules;
@@ -12,5 +13,6 @@ internal static class ModulesDependencyInjection
            .AddSingleton<IModule, BlockEvent>()
            .AddSingleton<IModule, ListenEvent>()
            .AddSingleton<IModule, ReplaceEvent>()
-           .AddSingleton<IModule, FilterCrashFixes>();
+           .AddSingleton<IModule, FilterCrashFixes>()
+           .AddSingleton<IModule, SharedInterface>();
 }

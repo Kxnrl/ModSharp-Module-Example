@@ -1,4 +1,5 @@
 using System;
+using Kxnrl.Sparkle.Kendama;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Sharp.Shared;
@@ -83,6 +84,8 @@ public sealed class YunLi : IModSharpModule, IEventListener, IEntityListener
 
         _logger.LogInformation("OnClientCommand -> {client}: {command}", client.Name, command.GetCommandString());
 
+        KendamaHello(client);
+
         return ECommandAction.Stopped;
     }
 
@@ -145,6 +148,42 @@ public sealed class YunLi : IModSharpModule, IEventListener, IEntityListener
     int IEntityListener.ListenerVersion => IEntityListener.ApiVersion;
 
     int IEntityListener.ListenerPriority => 0;
+
+#endregion
+
+#region Shared
+
+    public void OnAllModulesLoaded()
+    {
+        if (_shared.GetSharpModuleManager().GetDynamicNative($"{ISparkleKendama.Identity}.Hi") is Func<int, int> hi)
+        {
+            var echo   = new Random().Next(0, 100);
+            var result = hi(echo);
+
+            _logger.LogInformation("Invoke Dynamic Native: Hi({arg}) = {r}", echo, result);
+        }
+    }
+
+    private void KendamaHello(IGameClient client)
+    {
+        var manager = _shared.GetSharpModuleManager();
+
+        if (manager.GetOptionalSharpModuleInterface<ISparkleKendama>(ISparkleKendama.Identity) is not { } kendama)
+        {
+            _logger.LogError("Couldn't found shared interface {s}", ISparkleKendama.Identity);
+
+            return;
+        }
+
+        if (kendama.Instance is not { } instance)
+        {
+            _logger.LogWarning("Shared interface {s} is not longer available", ISparkleKendama.Identity);
+
+            return;
+        }
+
+        instance.Hello(client);
+    }
 
 #endregion
 }

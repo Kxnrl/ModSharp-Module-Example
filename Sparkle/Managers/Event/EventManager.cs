@@ -92,11 +92,6 @@ internal class EventManager : IEventManager, IManager, IEventListener
 
     public void HookEvent(string eventName, IEventManager.DelegateOnHookEvent callback)
     {
-        if (eventName.Equals("player_death", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new InvalidOperationException("Use InterceptDeathNotice instead");
-        }
-
         if (_events.Add(eventName))
         {
             _bridge.EventManager.HookEvent(eventName);

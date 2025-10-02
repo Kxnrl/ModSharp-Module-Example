@@ -11,4 +11,8 @@ internal interface IBaseInterface
     void Shutdown()
     {
     }
+
+    void OnAllSharpModulesLoaded()
+    {
+    }
 }
