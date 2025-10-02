@@ -7,3 +7,7 @@ Fully feature example, for big/mono project.
 ## Yunli
 
 Minimal module example.
+
+## Kendama
+
+The shared interface.
