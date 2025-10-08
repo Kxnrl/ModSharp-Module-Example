@@ -4,6 +4,7 @@ using Kxnrl.Sparkle.Extensions;
 using Kxnrl.Sparkle.Interfaces;
 using Kxnrl.Sparkle.Managers;
 using Kxnrl.Sparkle.Modules;
+using Kxnrl.Sparkle.NativeCalls;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -129,7 +130,8 @@ public sealed partial class Sparkle : IModSharpModule
     {
         services
             .AddManagers() // Managers
-            .AddModules(); // Modules;
+            .AddModules()  // Modules;
+            .AddNativeCalls();
     }
 
     private int CallInit<T>() where T : IBaseInterface
