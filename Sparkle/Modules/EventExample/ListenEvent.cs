@@ -1,6 +1,6 @@
-﻿using Kxnrl.Sparkle.Interfaces;
-using Kxnrl.Sparkle.Managers.Event;
+using Kxnrl.Sparkle.Interfaces;
 using Microsoft.Extensions.Logging;
+using Sharp.Extensions.GameEventManager;
 using Sharp.Shared.GameEvents;
 using Sharp.Shared.Objects;
 
@@ -10,7 +10,7 @@ internal sealed class ListenEvent : IModule
 {
     private readonly ILogger<ListenEvent> _logger;
 
-    public ListenEvent(ILogger<ListenEvent> logger, IEventManager eventManager)
+    public ListenEvent(ILogger<ListenEvent> logger, IGameEventManager eventManager)
     {
         _logger = logger;
 

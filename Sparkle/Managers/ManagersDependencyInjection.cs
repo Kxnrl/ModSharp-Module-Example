@@ -1,6 +1,5 @@
 using Kxnrl.Sparkle.Extensions;
 using Kxnrl.Sparkle.Interfaces;
-using Kxnrl.Sparkle.Managers.Event;
 using Kxnrl.Sparkle.Managers.Hook;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +9,5 @@ internal static class ManagersDependencyInjection
 {
     public static IServiceCollection AddManagers(this IServiceCollection services)
         => services
-           .AddSingleton<IManager, IHookManager, HookManager>()
-           .AddSingleton<IManager, IEventManager, EventManager>();
+            .AddSingleton<IManager, IHookManager, HookManager>();
 }

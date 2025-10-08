@@ -1,6 +1,6 @@
 using Kxnrl.Sparkle.Interfaces;
-using Kxnrl.Sparkle.Managers.Event;
 using Microsoft.Extensions.Logging;
+using Sharp.Extensions.GameEventManager;
 using Sharp.Shared.Enums;
 using Sharp.Shared.GameEvents;
 using Sharp.Shared.Types;
@@ -11,7 +11,7 @@ internal sealed class BlockEvent : IModule
 {
     private readonly ILogger<BlockEvent> _logger;
 
-    public BlockEvent(ILogger<BlockEvent> logger, IEventManager eventManager)
+    public BlockEvent(ILogger<BlockEvent> logger, IGameEventManager eventManager)
     {
         _logger = logger;
 
@@ -22,7 +22,7 @@ internal sealed class BlockEvent : IModule
     public bool Init()
         => true;
 
-    private HookReturnValue<bool> OnPlayerChangeName(EventHookParams param)
+    private HookReturnValue<bool> OnPlayerChangeName(in EventHookParams param)
     {
         // [[unlikely]] this should never happen
         if (param.Event is not IEventPlayerChangeName e)
@@ -36,11 +36,11 @@ internal sealed class BlockEvent : IModule
         return new HookReturnValue<bool>(EHookAction.SkipCallReturnOverride);
     }
 
-    private HookReturnValue<bool> OnWeaponReload(EventHookParams param)
+    private static HookReturnValue<bool> OnWeaponReload(in EventHookParams param)
     {
         // make server only,
         // don't broadcast to client
-        param.SetServerOnly();
+        param.MakeServerOnly();
 
         return new HookReturnValue<bool>();
     }

@@ -7,11 +7,14 @@ using Kxnrl.Sparkle.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sharp.Extensions.EntityHookManager;
+using Sharp.Extensions.GameEventManager;
 using Sharp.Shared;
+using Sharp.Shared.Abstractions;
 
 namespace Kxnrl.Sparkle;
 
-public sealed class Sparkle : IModSharpModule
+public sealed partial class Sparkle : IModSharpModule
 {
     public string DisplayName   => "Sparkle from StarRail";
     public string DisplayAuthor => "Kxnrl";
@@ -46,6 +49,10 @@ public sealed class Sparkle : IModSharpModule
         services.AddSingleton<IConfiguration>(configuration);
         services.AddLogging(sharedSystem.GetLoggerFactory());
 
+        services.AddSingleton(sharedSystem);
+        services.AddEntityHookManager();
+        services.AddGameEventManager();
+
         ConfigureServices(services);
 
         _bridge          = bridge;
@@ -74,6 +81,8 @@ public sealed class Sparkle : IModSharpModule
             init += modules;
         }
 
+        _serviceProvider.LoadAllSharpExtension();
+
         return init == 0 ? throw new ApplicationException("No Modules") : true;
     }
 
@@ -91,6 +100,8 @@ public sealed class Sparkle : IModSharpModule
 
         CallShutdown<IModule>();
         CallShutdown<IManager>();
+
+        _serviceProvider.ShutdownAllSharpExtension();
 
         // You must unregister your game data when your module is unloaded.
         _bridge.GameData.Unregister("Sparkle.games");
@@ -184,4 +195,7 @@ public sealed class Sparkle : IModSharpModule
             }
         }
     }
+
+    [LoggerMessage(LogLevel.Error, Message = "An error occurred while calling `{method}` in `{name}`")]
+    private partial void LogCallError(Exception exception, string method, string name);
 }

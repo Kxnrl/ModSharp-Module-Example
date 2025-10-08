@@ -52,7 +52,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="ModSharp.Sharp.Shared" Version="2.0.4" PrivateAssets="all" />
+      <PackageReference Include="ModSharp.Sharp.Extensions.EntityHookManager" Version="2.0.13" />
+      <PackageReference Include="ModSharp.Sharp.Extensions.GameEventManager" Version="2.0.13" />
+      <PackageReference Include="ModSharp.Sharp.Shared" Version="2.0.13" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
