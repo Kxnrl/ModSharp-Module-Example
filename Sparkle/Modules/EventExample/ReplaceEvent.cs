@@ -25,13 +25,13 @@ internal sealed class ReplaceEvent : IModule
     public bool Init()
         => true;
 
-    private HookReturnValue<bool> OnPlayerDeath(in EventHookParams param)
+    private HookReturnValue<bool> OnPlayerDeath(IGameEvent e, ref bool serverOnly)
     {
         IGameEvent? clone = null;
 
         try
         {
-            clone = _bridge.EventManager.CloneEvent(param.Event)
+            clone = _bridge.EventManager.CloneEvent(e)
                     ?? throw new InvalidOperationException("Failed to clone event");
 
             // modify kill feed icon
@@ -45,8 +45,8 @@ internal sealed class ReplaceEvent : IModule
                 }
             }
 
-            // make it happens server only, we send dummy to clients
-            param.MakeServerOnly();
+            // hide original event
+            serverOnly = true;
 
             return new HookReturnValue<bool>();
         }
@@ -56,11 +56,11 @@ internal sealed class ReplaceEvent : IModule
         }
     }
 
-    private HookReturnValue<bool> OnWeaponFire(in EventHookParams param)
+    private HookReturnValue<bool> OnWeaponFire(IGameEvent e, ref bool serverOnly)
     {
-        if (_bridge.EventManager.CloneEvent(param.Event) is not { } clone)
+        if (_bridge.EventManager.CloneEvent(e) is not { } clone)
         {
-            _logger.LogWarning("Failed to clone event {e}", param.Event.Name);
+            _logger.LogWarning("Failed to clone event {e}", e.Name);
 
             return new HookReturnValue<bool>();
         }
@@ -70,7 +70,7 @@ internal sealed class ReplaceEvent : IModule
         clone.Dispose();
 
         // after send clone, we make original event server only
-        param.MakeServerOnly();
+        serverOnly = true;
 
         return new HookReturnValue<bool>();
     }
