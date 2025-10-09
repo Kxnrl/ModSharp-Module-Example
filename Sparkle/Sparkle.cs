@@ -51,6 +51,7 @@ public sealed partial class Sparkle : IModSharpModule
         services.AddLogging(sharedSystem.GetLoggerFactory());
 
         services.AddSingleton(sharedSystem);
+        services.AddSingleton(sharedSystem.GetModSharp().GetGameData());
         services.AddEntityHookManager();
         services.AddGameEventManager();
 
