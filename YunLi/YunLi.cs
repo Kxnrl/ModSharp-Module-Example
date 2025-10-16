@@ -21,10 +21,10 @@ public sealed class YunLi : IModSharpModule, IEventListener, IEntityListener
     private readonly ISharedSystem  _shared;
 
     public YunLi(ISharedSystem sharedSystem,
-        string?                dllPath,
-        string?                sharpPath,
-        Version?               version,
-        IConfiguration?        coreConfiguration,
+        string                 dllPath,
+        string                 sharpPath,
+        Version                version,
+        IConfiguration         coreConfiguration,
         bool                   hotReload)
     {
         _logger = sharedSystem.GetLoggerFactory().CreateLogger<YunLi>();

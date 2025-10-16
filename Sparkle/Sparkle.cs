@@ -25,17 +25,12 @@ public sealed partial class Sparkle : IModSharpModule
     private readonly ServiceProvider  _serviceProvider;
 
     public Sparkle(ISharedSystem sharedSystem,
-        string?                  dllPath,
-        string?                  sharpPath,
-        Version?                 version,
-        IConfiguration?          coreConfiguration,
+        string                   dllPath,
+        string                   sharpPath,
+        Version                  version,
+        IConfiguration           coreConfiguration,
         bool                     hotReload)
     {
-        ArgumentNullException.ThrowIfNull(dllPath);
-        ArgumentNullException.ThrowIfNull(sharpPath);
-        ArgumentNullException.ThrowIfNull(version);
-        ArgumentNullException.ThrowIfNull(coreConfiguration);
-
         var bridge = new InterfaceBridge(dllPath, sharpPath, version, this, sharedSystem);
 
         var configuration = new ConfigurationBuilder()
